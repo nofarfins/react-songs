@@ -1,0 +1,13 @@
+.performance{
+    float: left;
+    max-width: 55%;
+    display: flex;
+    flex-wrap:  wrap;
+  }
+
+  .performanceinside{
+    display: flex;
+    flex-direction: column;
+    background-color: red;
+    flex-basis: 30%;
+  }
