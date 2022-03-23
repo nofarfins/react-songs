@@ -15,10 +15,9 @@ export class Performance extends React.Component {
           
       <div  >
         
-                 <h4>{this.props.performance.song.name}</h4>
-                 <p> by: {this.props.performance.singer.name}</p>
-                 <p> views: {this.props.performance.Amount_of_views}</p>
-                 <a href={this.props.performance.link}><ImPlay2 style={{fontSize:'300%'}} /></a>
+                 <h4>{this.props.performance.song.name}, {this.props.performance.singer.name}</h4>
+                 
+                 <p>   <a href={this.props.performance.link}><ImPlay2 style={{fontSize:'200%'}} /></a>    &nbsp;&nbsp;&nbsp; views: {this.props.performance.Amount_of_views}  </p>
                 <br></br>
                 
         <br></br>

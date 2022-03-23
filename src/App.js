@@ -5,7 +5,7 @@ import {MyNavBar} from './NavBar'
 function App() {
   return (
     
-    <div className='App' >
+    <div className ='font-link' >
       <MyNavBar/>
     </div> 
   );

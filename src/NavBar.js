@@ -48,6 +48,7 @@ export class MyNavBar extends React.Component {
       return(
     
         <div>
+            
       <Navbar bg="dark" variant="dark">
       
        &nbsp;&nbsp;&nbsp;<Nav className="me-auto" activeKey="performance" onSelect={this.handleSelected} >
@@ -68,6 +69,7 @@ export class MyNavBar extends React.Component {
                     show={this.state.showLoginModal}
                     onLoginClose={()=> this.setState({showLoginModal: false})}
                     />   
+
 
 
      </div> 

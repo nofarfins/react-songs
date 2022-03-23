@@ -14,7 +14,12 @@ export class AddArtistModal extends React.Component {
             information:""
         }
 
+        this.handleSubmit = this.handleSubmit.bind(this)
+
       
+    }
+    handleSubmit() {
+        return this.props.onSubmit(this.state.name, this.state.age, this.state.information)
     }
 
     renderArtist(artist, index){
@@ -35,11 +40,11 @@ render () {
     <Form>
     <Form.Group>
             <Form.Label>Name</Form.Label>
-            <Form.Select>
+            {/* <Form.Select>
                 {this.props.artists.map(
                     this.renderArtist)
                 }
-            </Form.Select>
+            </Form.Select> */}
         </Form.Group>
 
         <Form.Group className="mb-3">
@@ -47,7 +52,7 @@ render () {
             <Form.Text>
                 <Form.Control 
                     type="text" placeholder="Enter age here..." 
-                    value={this.state.age}
+                    value= {this.state.age}
                     onChange={(event) => this.setState({age: event.target.value})}/>
             </Form.Text>
         </Form.Group>
@@ -56,7 +61,7 @@ render () {
             <Form.Text>
                 <Form.Control 
                     type="text" placeholder="Enter information here..." 
-                    value={this.state.information}
+                    value={this.props.information}
                     onChange={(event) => this.setState({information: event.target.value})}/>
             </Form.Text>
         </Form.Group>
@@ -68,7 +73,7 @@ render () {
         Cancel
     </Button>
     <Button variant="primary" 
-        onClick={()=> this.props.onSubmit(this.state.name, this.state.age, this.state.information)}>
+        onClick={this.handleSubmit}>
         Save Changes
     </Button>
     </Modal.Footer>

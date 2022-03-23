@@ -14,7 +14,8 @@ export class Artist extends React.Component{
   render() {
       return(
       <div>
-        <h3> {this.props.artist.name}  </h3>
+        <h3> {this.props.artist.name} , {this.props.artist.age}  </h3>
+        
         {   !this.state.displayMore &&
                     <Nav.Link onClick={() => this.setState({displayMore: !this.state.displayMore})}>more...</Nav.Link>
                 }
