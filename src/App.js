@@ -1,14 +1,30 @@
 import React from 'react';
 import './App.css';
-import {MyNavBar} from './NavBar'
+import { Container } from 'react-bootstrap';
+import { Routes, Route } from "react-router-dom";
+import { Artists } from './Artists';
+import { Songs } from './Songs';
+import {Performances} from './Performances'
+import { WrappedLoginScreen } from './LoginScreen';
+
+
 
 function App() {
   return (
     
-    <div className ='font-link' >
-      <MyNavBar/>
-    </div> 
-  );
+    
+    <Routes>
+        <Route path="/" element={<Performances />} />
+        <Route path="/artists" element={<Artists />} />
+        <Route path="/songs" element={<Songs />} />
+        <Route path="/login" element={<WrappedLoginScreen  />} />
+        <Route path="/performances" element={<Performances />} />
+        
+        
+  
+    </Routes>
+ 
+  )
 }
 
 export default App;

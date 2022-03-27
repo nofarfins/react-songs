@@ -10,6 +10,14 @@ import './App.css';
 import Button from 'react-bootstrap/Button'
 import { ListGroup } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
+import { Header } from './Header';
+import { FaTrashAlt } from "react-icons/fa";
+
+import { BiEdit } from "react-icons/bi";
+
+
+export const BASE_PATH = "http://127.0.0.1:8000/api"
+export const ARTISTS_URL = `${BASE_PATH}/artists`
 
 
 
@@ -20,6 +28,7 @@ export class Artists extends React.Component {
     this.state= {
       artists: [],
       showAddArtistModal: false,
+      showUpdateModal:false,
       name: "",
       age: "",
       information:""
@@ -32,7 +41,10 @@ export class Artists extends React.Component {
     this.renderArtist= this.renderArtist.bind(this);
     this.submitArtist = this.submitArtist.bind(this)
     this.get_artists = this.get_artists.bind(this)
-    this.filterNameArtist = this.filterNameArtist.bind(this)
+    // this.filterNameArtist = this.filterNameArtist.bind(this)
+    this.deleteArtist = this.deleteArtist.bind(this)
+    // this.updateArtist = this.updateArtist.bind(this)
+    // this.update = this.update.bind(this)
   }
 
   get_artists() {
@@ -50,6 +62,47 @@ handleAddNew() {
   this.setState({showAddArtistModal: true})
 }
 
+handleAddUpdate() {
+  console.log('called handleAddUpdate')
+  this.setState({showUpdateModal: true})
+}
+
+deleteArtist(artistId) {
+  console.log("deleteArtist")
+  axios.delete(`${ARTISTS_URL}/${artistId}`,  )
+  .then(response => {
+    console.log(response)
+    if (response.status === 204) {
+        this.get_artists()
+    }
+})
+}
+
+
+// update(artistId) {
+//         axios.put(`${ARTISTS_URL}/${artistId}`, {
+//           name: 'yyyy',
+//           age: 22,
+//           information: 'nofar',
+//       })
+//       .then(response => {
+//         console.log(response.data)
+//         if (response.status === 200) {
+//          this.get_artists()
+
+//        }
+//       })
+//     }
+// updateArtist(artistId,) {
+//   console.log("updateArtist")
+//   axios.put(`${ARTISTS_URL}/${artistId}`, )
+//   .then(response => {
+//     console.log(response)
+//     if (response.status === 204) {
+//         this.get_artists()
+//     }
+// })
+// }
 
 
 submitArtist() {
@@ -66,34 +119,27 @@ submitArtist() {
           this.setState({showAddArtistModal: false})
            }
         
-
-filterNameArtist(artist, index){
-  return(
-          <option key={artist.id}>{artist.name}</option>
-         )
-          }
    
 componentDidMount() {
   this.get_artists()
 }
 
-renderArtist (artist, index){
-  return(
-    <div>
-    <div >
 
-      <br></br>
-      
-      <ListGroup.Item key={artist.id}>
-      <Artist  artist={artist} />
-      
+
+renderArtist (artist,index){
+  return(
+    <div   key={index}>
+
+      <ListGroup.Item key={index} >
+      <Artist  artist={artist}  />
+      <Button onClick={() => this.deleteArtist(artist.id)}> <FaTrashAlt/> Delete</Button>  &nbsp;&nbsp;   
+      <Button > <BiEdit/></Button>  
       </ListGroup.Item>
       
+      {/* onClick={this.handleAddUpdate.bind(this)} */}
+ </div>
       
-      </div>
-      
-        <br></br>
-      </div>
+
  
       
   )
@@ -106,10 +152,13 @@ renderArtist (artist, index){
         this.renderArtist)
       return(
         <div>
+          <Header/>
         <Container>
+          
           <br></br>
         <h1  > Artists List</h1>
         <Button  className="m-3" onClick={this.handleAddNew.bind(this)}> Add new</Button>
+
         <br></br>
         <br></br>
         <ListGroup.Item>
@@ -124,17 +173,7 @@ renderArtist (artist, index){
                     </Modal.Header>
 
                     <ModalBody>
-                        <Form>
-                            {/* <Form.Group className="mb-3">
-                                <Form.Label>Name</Form.Label>
-                                   <Form.Select>
-                                  {this.state.artists.map(
-                                  this.filterNameArtist)
-                                    }
-                                                  
-                                  </Form.Select> 
-                                  </Form.Group> */}
-                    
+                        <Form>                    
                             <Form.Group className="mb-3">
                                 <Form.Label>Age</Form.Label>
                                 <Form.Text>
@@ -169,6 +208,51 @@ renderArtist (artist, index){
                     </ModalBody>
                     <ModalFooter>
                          <Button onClick={this.submitArtist}>Save</Button> 
+                    </ModalFooter>
+                </Modal>
+
+                <Modal show={this.state.showUpdateModal} 
+                    onHide={() => this.setState({showUpdateModal: false})}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Edit</Modal.Title>
+                    </Modal.Header>
+
+                    <ModalBody>
+                        <Form>                    
+                            <Form.Group className="mb-3">
+                                <Form.Label>Age</Form.Label>
+                                <Form.Text>
+                                    <Form.Control 
+                                        type="text" placeholder="Enter age..." 
+                                        value={this.state.age}
+                                        onChange={(event) => this.setState({age: event.target.value})}/>
+                                </Form.Text>
+                            </Form.Group>
+
+                            <Form.Group className="mb-3">
+                                <Form.Label>Name</Form.Label>
+                                <Form.Text>
+                                    <Form.Control 
+                                        type="text" placeholder="Enter name..." 
+                                        value={this.state.name}
+                                        onChange={(event) => this.setState({name: event.target.value})}/>
+                                </Form.Text>
+                            </Form.Group>
+
+                            <Form.Group className="mb-3">
+                                <Form.Label>Info</Form.Label>
+                                <Form.Text>
+                                    <Form.Control 
+                                        type="text" placeholder="Enter information..." 
+                                        value={this.state.information}
+                                        onChange={(event) => this.setState({information: event.target.value})}/>
+                                </Form.Text>
+                            </Form.Group>
+
+                        </Form>
+                    </ModalBody>
+                    <ModalFooter>
+                         <Button onClick={this.update}>Save</Button> 
                     </ModalFooter>
                 </Modal>
 

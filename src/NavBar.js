@@ -9,13 +9,17 @@ import { FaMicrophone } from "react-icons/fa";
 import { GiMusicalScore } from "react-icons/gi";
 import { MdLogin } from "react-icons/md";
 import { AddLoginModal } from './Login';
+import { Container, NavbarBrand } from 'react-bootstrap';
 
 export class MyNavBar extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             showLoginModal: false,
-            selectedKey: "performance",
+            screen: "performance",
+            first_name: "",
+            last_name: "",
+
         }
 
         this.renderMainView= this.renderMainView.bind(this)
@@ -50,17 +54,22 @@ export class MyNavBar extends React.Component {
         <div>
             
       <Navbar bg="dark" variant="dark">
-      
-       &nbsp;&nbsp;&nbsp;<Nav className="me-auto" activeKey="performance" onSelect={this.handleSelected} >
-      <Nav.Link eventKey="performance"> <BiMusic/> Home</Nav.Link>
-           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <Container>
+       
+      <NavbarBrand eventKey="performance"> <BiMusic/> Home</NavbarBrand>
+          
         <Nav.Link eventKey="artist"> <FaMicrophone style={{fontSize:'110%'}} />Artist</Nav.Link>
-        &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      
         <Nav.Link eventKey= "song"> <GiMusicalScore style={{fontSize:'120%'}} /> Songs</Nav.Link>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 
         <Nav.Link eventKey= "login" onClick= {() => this.setState({showLoginModal: true})} > <MdLogin/> LogIn</Nav.Link>
-        </Nav>
+        <Navbar.Collapse className="justify-content-end">
+                <Navbar.Text>
+                  Signed in as: <a href="#login">{this.state.first_name + ' ' + this.state.last_name}</a>
+                </Navbar.Text>
+              </Navbar.Collapse>
         
+        </Container>
      </Navbar>
 
      {this.renderMainView()} 

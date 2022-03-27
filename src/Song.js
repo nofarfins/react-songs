@@ -1,4 +1,6 @@
 import React from 'react';
+import { SongDetails } from './SongDetails';
+import { Nav } from 'react-bootstrap';
 
 
 
@@ -16,16 +18,19 @@ export class Song extends React.Component {
           
       <div >
 
-                <h5> name:</h5>
-                <p> {this.props.song.name} </p>
-                <h5>song writer:</h5>
+<h3> {this.props.song.name} </h3>
+        
+        {   !this.state.displayMore &&
+                    <Nav.Link onClick={() => this.setState({displayMore: !this.state.displayMore})}>more...</Nav.Link>
+                }
+                {
+                    this.state.displayMore &&
+                    <SongDetails song= {this.props.song} />
+                }
+                {   this.state.displayMore &&
+                    <Nav.Link onClick={() => this.setState({displayMore: !this.state.displayMore})}>less...</Nav.Link>
+                }
 
-                <p>{this.props.song.song_writer}</p> 
-                <h5>song composer:</h5>
-                
-                <p>{this.props.song.song_composer}</p>
-                <h5>lyrics:</h5>
-                <p> {this.props.song.lyrics}</p>
 
       </div>
       )

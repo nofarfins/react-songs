@@ -7,6 +7,10 @@ import { Container , ListGroup, ModalBody, ModalFooter } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Header } from './Header';
+import { FaTrashAlt } from "react-icons/fa";
+export const BASE_PATH = "http://127.0.0.1:8000/api"
+export const PERFORMANCE_URL = `${BASE_PATH}/performance`
 
 
 
@@ -32,6 +36,7 @@ export class Performances extends React.Component {
     this.handleAddNew = this.handleAddNew.bind(this)
     this.get_performance = this.get_performance.bind(this)
     this.submitper = this.submitper.bind(this)
+    this.deletePerformance = this.deletePerformance.bind(this)
     // this.filterNameSong = this.filterNameSong.bind(this)
   }
 
@@ -55,6 +60,19 @@ handleAddNew() {
   console.log('called handleAddNew')
   this.setState({showAddPerModal: true})
 }
+
+
+deletePerformance(performanceId) {
+  console.log("deleteArtist")
+  axios.delete(`${PERFORMANCE_URL}/${performanceId}`,  )
+  .then(response => {
+    console.log(response)
+    if (response.status === 204) {
+        this.get_performance()
+    }
+})
+}
+
 
 // filterNameSong(song, index){
 //   return(
@@ -84,18 +102,18 @@ componentDidMount() {
 
 }
 
+
+
 renderPerformence(performance, index){
   return(
     
-    <div>
-    <div   >
-    <br></br>
+    <div key={index} >
+    
     <ListGroup.Item>
       <Performance key={performance.id} performance={performance} />
+      <Button onClick={() => this.deletePerformance(performance.id)}><FaTrashAlt/> Delete</Button>  &nbsp;&nbsp;
+      <Button>Add Review</Button>
       </ListGroup.Item>
-      <br></br>
-      </div>
-      <div></div>
       <br></br>
       </div>
       
@@ -109,8 +127,11 @@ renderPerformence(performance, index){
         this.renderPerformence)
       return(
         <div  >
-          <Container>
+         
+          
+          <Header/>
           <br></br>
+        <Container>
         <h1> Performences</h1>
         <br></br>
         <Button className="m-3" onClick={() => this.setState({showAddPerModal: true})}>Add performance</Button>
@@ -119,7 +140,7 @@ renderPerformence(performance, index){
         <ListGroup.Item>
         {performencesObjects}
         </ListGroup.Item>
-      </Container>
+        </Container>
         
         <Modal show={this.state.showAddPerModal} 
                     onHide={() => this.setState({showAddPerModal: false})}>

@@ -3,11 +3,12 @@ import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 import {Song} from './Song';
 import Button from 'react-bootstrap/Button'
-import { ModalBody } from 'react-bootstrap';
-import { ModalFooter } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form'
 import './App.css';
+import { ListGroup, Container, ModalBody, ModalFooter } from 'react-bootstrap';
+import { Header } from './Header';
+
 
 
 export class Songs extends React.Component {
@@ -74,10 +75,11 @@ componentDidMount() {
 
 renderSong (song, index){
   return(
-    <div>
+    
+      <ListGroup.Item key={index}>
+      <Song  song={song} />
+      </ListGroup.Item>
       
-      <Song key={song.id} song={song} />
-      </div>
   )
 }
 
@@ -87,11 +89,15 @@ renderSong (song, index){
         this.renderSong)
       return(
         <div>
+          <Header/>
+          <Container>
         <h3> songs list</h3>
         <Button className="m-3" onClick={this.handleAddNew.bind(this)}> Add new</Button>
         <br></br>
+        <ListGroup.Item>
         <ul>{songsObjects}</ul>
-
+        </ListGroup.Item>
+        </Container>
         <Modal show={this.state.showaddsongmodal} 
                     onHide={() => this.setState({showaddsongmodal: false})}>
                     <Modal.Header closeButton>
