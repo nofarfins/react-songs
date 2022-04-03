@@ -1,13 +1,14 @@
 import React from 'react';
 import { ImPlay2 } from "react-icons/im";
 import { Nav } from 'react-bootstrap';
+import { Review } from './Review';
 
 export class Performance extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
           displayMore:false,
-          displayViews:false
+          displayViews:false,
         }
     }
 
@@ -21,15 +22,17 @@ export class Performance extends React.Component {
                  
                  <p>   <a href={this.props.performance.link}><ImPlay2 style={{fontSize:'200%'}} /></a> 
                    &nbsp;&nbsp;&nbsp; views: {this.props.performance.Amount_of_views}  </p>
-{/*                   
-                {
+                   <p>Total Reviews:{this.props.reviews}</p>
+                   
+               {
                     this.state.displayMore &&
                     !this.props.reviews.length ? 'No reviews yet':
                     <Nav.Link onClick={() => this.setState({displayViews:!this.state.displayViews})}>{this.state.displayViews?'Hide Reviews':'Display Reviews'}</Nav.Link>
                 }
-                  {this.state.displayViews && <ReviewsList reviews={this.props.reviews}/>} */}
-                <br></br>
                 
+                   {this.state.displayViews && <p>{this.props.review.title}</p>}  
+                <br></br>
+                 
         <br></br>
       </div>
       )

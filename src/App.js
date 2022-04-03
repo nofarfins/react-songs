@@ -17,9 +17,8 @@ function App() {
         <Route path="/" element={<Performances />} />
         <Route path="/artists" element={<Artists />} />
         <Route path="/songs" element={<Songs />} />
-        <Route path="/login" element={<WrappedLoginScreen  />} />
         <Route path="/performances" element={<Performances />} />
-        
+        <Route path="/login" element={<WrappedLoginScreen />} />    
         
   
     </Routes>

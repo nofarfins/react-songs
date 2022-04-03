@@ -18,17 +18,18 @@ export class Songs extends React.Component {
     this.state= {
       songs: [],
       artists: [],
-      showaddsongmodal:false,
-      
-      name: "",
-      song_writer:"",
+      showaddsongmodal:false,      
+      name:'',
       song_composer: "",
-      performed_by:"",
-      lyrics:""
+      song_writer:"",
+      lyrics:"",
+      song:""
     }
+
    this.renderSong= this.renderSong.bind(this);
-   this.submitSong = this.submitsong.bind(this)
-   this.get_songs = this.get_songs.bind(this) 
+   this.submitSong = this.submitsong.bind(this);
+   this.get_songs = this.get_songs.bind(this);
+   this.filterNameArtist = this.filterNameArtist.bind(this);
   }
 
   get_songs() {
@@ -39,35 +40,37 @@ export class Songs extends React.Component {
       
       this.setState({songs: res.data})
   })
-  
+  axios
+  .get('http://127.0.0.1:8000/api/artists/')
+  .then(res => {
+      
+      this.setState({artists: res.data})
+  })
 }
 
-handleAddNew() {
-  console.log('called handleAddNew')
-  this.setState({showaddsongmodal: true})
-}
+
 
 submitsong() {
-  console.log("submit songs")
-  axios.post('http://127.0.0.1:8000/api/songs/',{
-    name: 1,
-    lyrics:'bla',
-    song_composer: this.state.song_composer,
-    song_writer:2,
-  })
+  console.log("submit songs", {name:this.state.name,
+    song_composer:this.state.song_composer,
+    song_writer: this.state.song_writer,
+    lyrics: this.state.lyrics})
+  axios.post('http://127.0.0.1:8000/api/songs/',
+  {name:this.state.name,
+  song_composer:this.state.song_composer,
+  song_writer: this.state.song_writer,
+  lyrics: this.state.lyrics})
     .then(response => {
-        if (response.status === 201) {
-            console.log("finish")
-       }
-     
-      })
-    }
+    if (response.status === 201) {
+    this.get_songs()}
+          })
+    this.setState({showaddsongmodal: false})}
 
-// filterNameArtist(artist, index){
-//     return(
-//           <option key={artist.id}>{artist.name}</option>
-//           )
-//                   }
+filterNameArtist(artist){
+    return(
+          <option key={artist.id}>{artist.name}</option>
+          )
+                  }
       
 componentDidMount() {
   this.get_songs()
@@ -75,11 +78,12 @@ componentDidMount() {
 
 renderSong (song, index){
   return(
-    
-      <ListGroup.Item key={index}>
-      <Song  song={song} />
+    <div key={index} >
+      <ListGroup.Item >
+      <Song song={song} /> 
       </ListGroup.Item>
-      
+      <br></br>
+    </div>      
   )
 }
 
@@ -91,45 +95,55 @@ renderSong (song, index){
         <div>
           <Header/>
           <Container>
-        <h3> songs list</h3>
-        <Button className="m-3" onClick={this.handleAddNew.bind(this)}> Add new</Button>
+          <br></br>
+        <h1>songs list</h1>
+        <Button className="m-3" onClick={() => this.setState({showaddsongmodal: true})}> Add new</Button>
         <br></br>
-        <ListGroup.Item>
-        <ul>{songsObjects}</ul>
-        </ListGroup.Item>
+        <br></br>
+        
+        {songsObjects}
+        
         </Container>
         <Modal show={this.state.showaddsongmodal} 
                     onHide={() => this.setState({showaddsongmodal: false})}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Add new song</Modal.Title>
+                        <Modal.Title> new song</Modal.Title>
                     </Modal.Header>
 
                     <ModalBody>
                         <Form>
                             <Form.Group className="mb-3">
-                                <Form.Label>Name</Form.Label>
+                                <Form.Label>Song name</Form.Label>
                                 <Form.Text>
                                     <Form.Control 
-                                        type="text" placeholder="Enter age..." 
+                                        type="text" placeholder="Enter song name..." 
                                         value={this.state.name}
                                         onChange={(event) => this.setState({name: event.target.value})}/>
                                 </Form.Text>
                             </Form.Group>
 
+                            <Form.Group className="mb-3"> 
+                                <Form.Label>Song composer</Form.Label>
+                                   <Form.Select
+                                   value = {this.state.song_composer}
+                                   onChange = {(event) => this.setState({song_composer: event.target.value})}>
+                                  {this.state.songs.map(this.filterNameArtist)}
+                                                  
+                                   </Form.Select> 
+                                  </Form.Group>
+
+                                  <Form.Group className="mb-3"> 
+                                <Form.Label>Song writer</Form.Label>
+                                   <Form.Select
+                                   placeholder='enter singer:'
+                                   value = {this.state.song_writer}
+                                   onChange = {(event) => this.setState({song_writer: event.target.value})}>
+                                  {this.state.artists.map(this.filterNameArtist)}           
+                                   </Form.Select> 
+                                  </Form.Group>
 
                             <Form.Group className="mb-3">
-                                <Form.Label>song composer:</Form.Label>
-                                <Form.Text>
-                                    <Form.Control 
-                                        type="number" placeholder="Enter information..." 
-                                        value={this.state.song_composer}
-                                        onChange={(event) => this.setState({song_composer: event.target.value})}/>
-                                </Form.Text>
-                            </Form.Group>
-
-                        
-                            <Form.Group className="mb-3">
-                                <Form.Label>lyrics:</Form.Label>
+                                <Form.Label>Lyrics:</Form.Label>
                                 <Form.Text>
                                     <Form.Control 
                                         type="text" placeholder="Enter information..." 
@@ -137,7 +151,6 @@ renderSong (song, index){
                                         onChange={(event) => this.setState({lyrics: event.target.value})}/>
                                 </Form.Text>
                             </Form.Group>
-
                         </Form>
                     </ModalBody>
                     <ModalFooter>

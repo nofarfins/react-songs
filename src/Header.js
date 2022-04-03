@@ -17,9 +17,17 @@ export class Header extends React.Component {
         this.state = {
             first_name: "",
             last_name: "",
-            showProfile: false
+            showProfile: false,
+            username:"",
+            email:""
 
         }
+    }
+
+    onSignoutClick() {
+      window.localStorage.removeItem("token")
+      this.setState({showProfile : false})
+      window.location.href = "/login"
     }
 
     componentDidMount() {
@@ -28,8 +36,10 @@ export class Header extends React.Component {
           axios.get('http://127.0.0.1:8000/api/users/current', {headers: {Authorization: 'Token ' + token}})
           .then(response => {
             if (response.status === 200) {
-                console.log("got response for user " + response.data.first_name)
-              this.setState({first_name: response.data.first_name, last_name: response.data.last_name})
+                
+                console.log("got response for user " + response.data.first_name, response.data
+                )
+              this.setState({first_name: response.data.first_name, last_name: response.data.last_name })
             } else if (response.status === 401) {
               console.log('401')
             }
@@ -68,24 +78,19 @@ export class Header extends React.Component {
                </Navbar>
                <Modal show={this.state.showProfile} onHide={() => this.setState({showProfile: false})}>
 
-
-               
-                  <Modal.Header closeButton>
-                  <Modal.Title >My Profile </Modal.Title>
-                  </Modal.Header>
-
                     <Modal.Body >
                       <Container>
                       <img src="profile1.jpg" width="110" height="120" className="center" ></img>
                     
-                      <p style={{textAlign:'center'}} >username:</p>
-                      <p style={{textAlign:'center'}}>first name: </p>
-                      <p style={{textAlign:'center'}}>Last name: </p>
-                      <p style={{textAlign:'center'}}>email:</p>
+                      <p style={{textAlign:'center'}} >username: {this.state.username}</p>
+                      <p style={{textAlign:'center'}}>first name:{this.state.first_name} </p>
+                      <p style={{textAlign:'center'}}>Last name:{this.state.last_name} </p>
+                      <p style={{textAlign:'center'}}>email: {this.state.email}</p>
                       </Container>
                     </Modal.Body>
                     <Modal.Footer>
-                      <Button variant="secondary">Sign UP</Button>
+                    <Button variant="secondary" onClick={this.onSignoutClick.bind(this)}>Signout</Button>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </Modal.Footer>
                   
                   </Modal>

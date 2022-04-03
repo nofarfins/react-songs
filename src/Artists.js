@@ -12,12 +12,12 @@ import { ListGroup } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import { Header } from './Header';
 import { FaTrashAlt } from "react-icons/fa";
-
 import { BiEdit } from "react-icons/bi";
 
 
 export const BASE_PATH = "http://127.0.0.1:8000/api"
 export const ARTISTS_URL = `${BASE_PATH}/artists`
+
 
 
 
@@ -31,12 +31,17 @@ export class Artists extends React.Component {
       showUpdateModal:false,
       name: "",
       age: "",
-      information:""
-      
+      information:"",
+      selectedId:null,
+      errors:{}
+
       
       
       
     }
+
+
+    
      
     this.renderArtist= this.renderArtist.bind(this);
     this.submitArtist = this.submitArtist.bind(this)
@@ -44,8 +49,37 @@ export class Artists extends React.Component {
     // this.filterNameArtist = this.filterNameArtist.bind(this)
     this.deleteArtist = this.deleteArtist.bind(this)
     // this.updateArtist = this.updateArtist.bind(this)
-    // this.update = this.update.bind(this)
+    this.update = this.update.bind(this)
+    this.handleAddUpdate = this.handleAddUpdate.bind(this)
+    this.validate = this.validate.bind(this)
+   
+  
   }
+
+  validate(){;
+    let errors = {};
+    let isValid = true;
+
+    if (!this.state.name) {
+      isValid = false;
+      errors["name"] = "Please enter artist name.";
+    }
+
+    if (!this.state.age) {
+      isValid = false;
+      errors["age"] = "Please enter artist age.";
+    }
+
+    if (!this.state.information) {
+      isValid = false;
+      errors["information"] = "Please enter artist information.";
+    }
+    this.setState({
+      errors: errors
+    });
+
+    return isValid;
+}
 
   get_artists() {
     console.log('called getartists')
@@ -62,9 +96,9 @@ handleAddNew() {
   this.setState({showAddArtistModal: true})
 }
 
-handleAddUpdate() {
+handleAddUpdate(artist) {
   console.log('called handleAddUpdate')
-  this.setState({showUpdateModal: true})
+  this.setState({showUpdateModal: true, selectedId: artist.id, name:artist.name, age:artist.age, information:artist.information})
 }
 
 deleteArtist(artistId) {
@@ -79,33 +113,31 @@ deleteArtist(artistId) {
 }
 
 
-// update(artistId) {
-//         axios.put(`${ARTISTS_URL}/${artistId}`, {
-//           name: 'yyyy',
-//           age: 22,
-//           information: 'nofar',
-//       })
-//       .then(response => {
-//         console.log(response.data)
-//         if (response.status === 200) {
-//          this.get_artists()
 
-//        }
-//       })
-//     }
-// updateArtist(artistId,) {
-//   console.log("updateArtist")
-//   axios.put(`${ARTISTS_URL}/${artistId}`, )
-//   .then(response => {
-//     console.log(response)
-//     if (response.status === 204) {
-//         this.get_artists()
-//     }
-// })
-// }
 
+update() {
+  console.log("update")
+  console.log()
+  axios.put(`${ARTISTS_URL}/${this.state.selectedId}`,  {
+         
+          name: this.state.name,
+          age:this.state.age,
+          information: this.state.information,
+      })
+      .then(response => {
+        console.log(response.data)
+        if (response.status === 200) {
+         this.get_artists()
+
+         this.setState({showUpdateModal:false , name:"", age:"", information:""})
+
+       }
+      
+      })
+    }
 
 submitArtist() {
+    if((this.validate())){
     console.log("submit artist")
     axios.post('http://127.0.0.1:8000/api/artists/',{
       name: this.state.name,
@@ -118,11 +150,15 @@ submitArtist() {
         })
           this.setState({showAddArtistModal: false})
            }
-        
+          }
+          
+          
    
 componentDidMount() {
   this.get_artists()
 }
+
+
 
 
 
@@ -132,11 +168,10 @@ renderArtist (artist,index){
 
       <ListGroup.Item key={index} >
       <Artist  artist={artist}  />
-      <Button onClick={() => this.deleteArtist(artist.id)}> <FaTrashAlt/> Delete</Button>  &nbsp;&nbsp;   
-      <Button > <BiEdit/></Button>  
+      <Button onClick={() => this.deleteArtist(artist.id)}> <FaTrashAlt/> </Button>  &nbsp;&nbsp;   
+      <Button onClick={() => this.handleAddUpdate(artist)}  >  <BiEdit/></Button>  
       </ListGroup.Item>
-      
-      {/* onClick={this.handleAddUpdate.bind(this)} */}
+      <br></br>
  </div>
       
 
@@ -147,7 +182,6 @@ renderArtist (artist,index){
 
 
     render() {
-    
       let artistsObjects = this.state.artists.map(
         this.renderArtist)
       return(
@@ -161,12 +195,12 @@ renderArtist (artist,index){
 
         <br></br>
         <br></br>
-        <ListGroup.Item>
+        
           {artistsObjects}
-         </ListGroup.Item>
+        
          </Container>
         
-        <Modal show={this.state.showAddArtistModal} 
+        <Modal show={this.state.showAddArtistModal}  id = {this.state.id}
                     onHide={() => this.setState({showAddArtistModal: false})}>
                     <Modal.Header closeButton>
                         <Modal.Title>Add new artist</Modal.Title>
@@ -178,9 +212,10 @@ renderArtist (artist,index){
                                 <Form.Label>Age</Form.Label>
                                 <Form.Text>
                                     <Form.Control 
-                                        type="text" placeholder="Enter age..." 
+                                        type="number" placeholder="Enter age..." 
                                         value={this.state.age}
                                         onChange={(event) => this.setState({age: event.target.value})}/>
+                                        <div className="text-danger">{this.state.errors.age}</div>
                                 </Form.Text>
                             </Form.Group>
 
@@ -191,6 +226,7 @@ renderArtist (artist,index){
                                         type="text" placeholder="Enter name..." 
                                         value={this.state.name}
                                         onChange={(event) => this.setState({name: event.target.value})}/>
+                                        <div className="text-danger">{this.state.errors.name}</div>
                                 </Form.Text>
                             </Form.Group>
 
@@ -201,6 +237,7 @@ renderArtist (artist,index){
                                         type="text" placeholder="Enter information..." 
                                         value={this.state.information}
                                         onChange={(event) => this.setState({information: event.target.value})}/>
+                                        <div className="text-danger">{this.state.errors.information}</div>
                                 </Form.Text>
                             </Form.Group>
 
@@ -211,10 +248,11 @@ renderArtist (artist,index){
                     </ModalFooter>
                 </Modal>
 
-                <Modal show={this.state.showUpdateModal} 
+
+                <Modal show={this.state.showUpdateModal}  
                     onHide={() => this.setState({showUpdateModal: false})}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Edit</Modal.Title>
+                        <Modal.Title>Edit artist</Modal.Title>
                     </Modal.Header>
 
                     <ModalBody>
@@ -223,7 +261,7 @@ renderArtist (artist,index){
                                 <Form.Label>Age</Form.Label>
                                 <Form.Text>
                                     <Form.Control 
-                                        type="text" placeholder="Enter age..." 
+                                        type="number" placeholder="Enter age..." 
                                         value={this.state.age}
                                         onChange={(event) => this.setState({age: event.target.value})}/>
                                 </Form.Text>
@@ -256,9 +294,18 @@ renderArtist (artist,index){
                     </ModalFooter>
                 </Modal>
 
-        </div>
+                
         
+
+
+          
+        </div>
+
+
+          
       )          
         
       }
   }
+
+  

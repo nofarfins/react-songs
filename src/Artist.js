@@ -24,9 +24,7 @@ export class Artist extends React.Component{
                     <ArtistDetails artist= {this.props.artist} />
                 }
                 {   this.state.displayMore &&
-                    <Nav.Link onClick={() => this.setState({displayMore: !this.state.displayMore})}>less...</Nav.Link>
-                }
-
+                    <Nav.Link onClick={() => this.setState({displayMore: !this.state.displayMore})}>less...</Nav.Link>}
                 
       </div>
 
