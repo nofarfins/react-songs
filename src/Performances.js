@@ -11,8 +11,12 @@ import { Header } from './Header';
 import { FaTrashAlt } from "react-icons/fa";
 import { BiMessageRounded } from "react-icons/bi";
 import { BiEdit } from "react-icons/bi";
+import { ImPlay2 } from "react-icons/im";
+import { FormSearch } from './TrySearchFilter';
+import { Nav } from 'react-bootstrap';
 export const BASE_PATH = "http://127.0.0.1:8000/api"
 export const PERFORMANCE_URL = `${BASE_PATH}/performance`
+
 
 
 export class Performances extends React.Component {
@@ -35,6 +39,10 @@ export class Performances extends React.Component {
       selectedId: null,
       errors:"",
       showAddreview:false,
+      search_line : "",
+      displayViews:false,
+      displayMore:false,
+      showReviews : false
     }
      
     this.renderPerformence= this.renderPerformence.bind(this)
@@ -47,6 +55,8 @@ export class Performances extends React.Component {
     this.handleAddUpdate = this.handleAddUpdate.bind(this)
     this.filterNameSinger = this.filterNameSinger.bind(this)
     this.handleSubmitReview= this.handleSubmitReview.bind(this)
+    this.get_reviews = this.get_reviews.bind(this)
+    this.handleAddReviews = this.handleAddReviews.bind(this) 
   }
 
 
@@ -78,6 +88,19 @@ export class Performances extends React.Component {
 }
 
 
+get_reviews(){
+  console.log('get_reviews')
+  axios
+  .get(`${PERFORMANCE_URL}/${this.state.selectedId}/review`)
+  .then(res => {
+      
+      console.log('get_performence', this.state.selectedId)
+      this.setState({reviews: res.data})
+      console.log(this.state.reviews)
+
+  
+  })
+}
   get_performance() {
     console.log('called get')
     axios
@@ -86,13 +109,6 @@ export class Performances extends React.Component {
     console.log(res)
       
       this.setState({performences: res.data})
-  })
-   axios
-  .get('http://127.0.0.1:8000/api/reviews/')
-  .then(res => {
-      
-      this.setState({reviews: res.data})
-  
   })
   axios
   .get('http://127.0.0.1:8000/api/songs/')
@@ -108,6 +124,7 @@ export class Performances extends React.Component {
       this.setState({artists: res.data})
   
   })
+  
 }
 
 handleAddNew() {
@@ -120,8 +137,17 @@ handleSubmitReview(){
   this.setState({showAddreview:true})
 }
 
+handleAddReviews(performance) {
+  console.log(performance.id)
+  
+  console.log('called handleAddReviews')
+  this.setState({showReviews: true, selectedId: performance.id})
+}
+
+
 
 handleAddUpdate(performance) {
+  console.log(performance.id)
   console.log('called handleAddUpdate')
   this.setState({showUpdateModal: true, selectedId: performance.id,
   song:performance.song, singer: performance.singer, link : performance.link, Amount_of_views:performance.Amount_of_views })
@@ -144,7 +170,7 @@ update() {
         if (response.status === 200) {
          this.get_performance()
 
-         this.setState({showUpdateModal:false, song:"", singer:"", link:"", Amount_of_views:0})
+         this.setState({showUpdateModal:false, song:"", singer:"", link:"", Amount_of_views:0, selectedId:null})
 
        }
       
@@ -187,13 +213,13 @@ submitper() {
       song: this.state.song,
       singer: this.state.singer,
       link: this.state.link,
-      Amount_of_views: 0 ,})
+      Amount_of_views: 0})
       .then(response => {
         if (response.status === 201) {
          this.get_performance()
        }
       })
-        this.setState({showAddPerModal: false})
+        this.setState({showAddPerModal: false, singer:"", song:"", link:"", Amount_of_views:0})
     }
          }
       
@@ -203,18 +229,21 @@ componentDidMount() {
 
 
 
-renderPerformence(performance, index, review){
-    let reviewsList = this.state.reviews.filter((review) => review.Performance_id === performance.Id)
+
+renderPerformence(performance, index){
+  console.log('renderPerformance', performance.id)
+
   return(
     
     <div key={index} >
     
     <ListGroup.Item>
-      <Performance key={performance.id} performance={performance}/>
+       <Performance  key={performance.id} performance={performance} />
+      {/* <Nav.Link onClick={() => this.get_reviews(performance)}  >{this.state.displayViews?'Hide Reviews':'Display Reviews'}</Nav.Link> */}
+      {this.state.displayViews && <p>{this.state.reviews.length}</p>}  
+      <Button onClick= {()=> this.handleAddReviews(performance)} >display reviews</Button>  &nbsp;&nbsp;
       <Button onClick={() => this.deletePerformance(performance.id)}><FaTrashAlt/></Button>  &nbsp;&nbsp;
       <Button onClick={()=> this.handleAddUpdate(performance)}  >  <BiEdit/></Button>  
-      &nbsp;&nbsp;
-      <Button ><BiMessageRounded   style={{fontSize:'120%'}}/></Button>
       </ListGroup.Item>
       <br></br>
       </div>
@@ -236,6 +265,8 @@ renderPerformence(performance, index, review){
         <Container>
         <br></br>
         <h1> Performences</h1>
+        {/* <input type="search" value= {this.state.search_line} onChange = {(event) => this.setState({search_line: event.target.value})}></input> */}
+        {/* <Button  >search</Button> */}
         <Button className="m-3" onClick={() => this.handleAddNew()}>Add performance</Button>
         <br></br>
         <br></br>
@@ -374,6 +405,31 @@ renderPerformence(performance, index, review){
                          <Button >Save</Button> 
                     </ModalFooter>
                 </Modal>
+
+
+
+<Modal show={this.state.showReviews}  
+                    onHide={() => this.setState({showReviews: false})}>
+                    
+                    <Modal.Header closeButton>
+                        <Modal.Title>reviews</Modal.Title>
+                    </Modal.Header>
+
+                    <ModalBody>
+                        <Form>                    
+                           <p> Total reviews: {this.state.reviews.length}</p>
+                           
+                           <p>{this.state.reviews.id}</p>
+
+
+                        </Form>
+                    </ModalBody>
+                    <ModalFooter>
+                         <Button onClick={this.get_reviews}>see reviews</Button>
+                         <Button onClick={()=> this.handleSubmitReview(performance)} >add reviews</Button> 
+                    </ModalFooter>
+                </Modal>
+
 
         </div>
       )          

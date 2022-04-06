@@ -148,7 +148,7 @@ submitArtist() {
            this.get_artists()
          }
         })
-          this.setState({showAddArtistModal: false})
+          this.setState({showAddArtistModal: false , name:"", age:"", information:""})
            }
           }
           
