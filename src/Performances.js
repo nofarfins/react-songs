@@ -14,6 +14,7 @@ import { BiEdit } from "react-icons/bi";
 import { ImPlay2 } from "react-icons/im";
 import { FormSearch } from './TrySearchFilter';
 import { Nav } from 'react-bootstrap';
+import { CgProfile } from "react-icons/cg";
 export const BASE_PATH = "http://127.0.0.1:8000/api"
 export const PERFORMANCE_URL = `${BASE_PATH}/performance`
 
@@ -28,6 +29,7 @@ export class Performances extends React.Component {
       songs:[],
       reviews: [],
       artists : [],
+      users:[],
       showAddPerModal: false,
       Amount_of_views: 0,
       link:"",
@@ -57,6 +59,7 @@ export class Performances extends React.Component {
     this.handleSubmitReview= this.handleSubmitReview.bind(this)
     this.get_reviews = this.get_reviews.bind(this)
     this.handleAddReviews = this.handleAddReviews.bind(this) 
+    this.reviewsDetails = this.reviewsDetails.bind(this)
   }
 
 
@@ -124,6 +127,13 @@ get_reviews(){
       this.setState({artists: res.data})
   
   })
+  axios
+  .get('http://127.0.0.1:8000/api/user/')
+  .then(res => {
+      
+      this.setState({users: res.data})
+  
+  })
   
 }
 
@@ -189,6 +199,18 @@ deletePerformance(performanceId) {
 }
 
 
+reviewsDetails(review, index){
+return(
+  <div key={index} >
+  
+  <h6> <CgProfile style={{fontSize:'140%'}}/> {review.user.first_name}  </h6>
+  <p> {review.review_text} </p>
+  </div>
+)
+
+}
+
+
 filterNameSong(song){
   return(
           <option value={song.id}  key={song.id}>{song.name}</option>
@@ -239,7 +261,6 @@ renderPerformence(performance, index){
     
     <ListGroup.Item>
        <Performance  key={performance.id} performance={performance} />
-      {/* <Nav.Link onClick={() => this.get_reviews(performance)}  >{this.state.displayViews?'Hide Reviews':'Display Reviews'}</Nav.Link> */}
       {this.state.displayViews && <p>{this.state.reviews.length}</p>}  
       <Button onClick= {()=> this.handleAddReviews(performance)} >display reviews</Button>  &nbsp;&nbsp;
       <Button onClick={() => this.deletePerformance(performance.id)}><FaTrashAlt/></Button>  &nbsp;&nbsp;
@@ -265,8 +286,6 @@ renderPerformence(performance, index){
         <Container>
         <br></br>
         <h1> Performences</h1>
-        {/* <input type="search" value= {this.state.search_line} onChange = {(event) => this.setState({search_line: event.target.value})}></input> */}
-        {/* <Button  >search</Button> */}
         <Button className="m-3" onClick={() => this.handleAddNew()}>Add performance</Button>
         <br></br>
         <br></br>
@@ -372,7 +391,7 @@ renderPerformence(performance, index){
 
 
                 <Modal show={this.state.showAddreview} 
-                    onHide={() => this.setState({showAddreview: false})}>
+                    onHide={() => this.setState({showAddreview: false,})}>
                     <Modal.Header closeButton>
                         <Modal.Title>Add new review</Modal.Title>
                     </Modal.Header>
@@ -409,25 +428,22 @@ renderPerformence(performance, index){
 
 
 <Modal show={this.state.showReviews}  
-                    onHide={() => this.setState({showReviews: false})}>
+                    onHide={() => this.setState({showReviews: false, reviews:[]})}>
                     
                     <Modal.Header closeButton>
-                        <Modal.Title>reviews</Modal.Title>
+                      <h1>reviews</h1>
                     </Modal.Header>
 
                     <ModalBody>
-                        <Form>                    
-                           <p> Total reviews: {this.state.reviews.length}</p>
-                           
-                           <p>{this.state.reviews.id}</p>
-
-
+                        <Form>  
+                                           
+                           {this.state.reviews.map(
+                                  this.reviewsDetails)
+                                    }
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;            <Button onClick={this.get_reviews}>see reviews</Button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         <Button onClick={()=> this.handleSubmitReview(performance)} >add reviews</Button> 
                         </Form>
                     </ModalBody>
-                    <ModalFooter>
-                         <Button onClick={this.get_reviews}>see reviews</Button>
-                         <Button onClick={()=> this.handleSubmitReview(performance)} >add reviews</Button> 
-                    </ModalFooter>
                 </Modal>
 
 
