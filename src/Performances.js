@@ -8,12 +8,8 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Header } from './Header';
-import { FaTrashAlt } from "react-icons/fa";
-import { BiMessageRounded } from "react-icons/bi";
+import { FaTrashAlt, FaRegComment } from "react-icons/fa";
 import { BiEdit } from "react-icons/bi";
-import { ImPlay2 } from "react-icons/im";
-import { FormSearch } from './TrySearchFilter';
-import { Nav } from 'react-bootstrap';
 import { CgProfile } from "react-icons/cg";
 export const BASE_PATH = "http://127.0.0.1:8000/api"
 export const PERFORMANCE_URL = `${BASE_PATH}/performance`
@@ -35,8 +31,7 @@ export class Performances extends React.Component {
       link:"",
       song: "",
       singer:"",
-      title:"",
-      text:"",
+      review_text:"",
       showUpdateModal:false,
       selectedId: null,
       errors:"",
@@ -60,11 +55,27 @@ export class Performances extends React.Component {
     this.get_reviews = this.get_reviews.bind(this)
     this.handleAddReviews = this.handleAddReviews.bind(this) 
     this.reviewsDetails = this.reviewsDetails.bind(this)
+    this.AddReview = this.AddReview.bind(this)
+  }
+
+  validate_review(){;
+    let errors = {};
+    let isValid = true;
+
+    if (!this.state.review_text) {
+      isValid = false;
+      errors["review_text"] = "Please write your opinion!";
+    }
+    this.setState({
+      errors: errors
+    });
+
+    return isValid;
   }
 
 
 
-  validate(){;
+  validate_per(){;
     let errors = {};
     let isValid = true;
 
@@ -82,7 +93,6 @@ export class Performances extends React.Component {
       isValid = false;
       errors["Amount_of_views"] = "Please enter views number";
     }
-
     this.setState({
       errors: errors
     });
@@ -142,14 +152,13 @@ handleAddNew() {
   this.setState({showAddPerModal: true})
 }
 
-handleSubmitReview(){
-  console.log('calles handleSubmit')
-  this.setState({showAddreview:true})
+handleSubmitReview(performance){
+  console.log('calles handleSubmit review')
+  this.setState({showAddreview:true, selectedId:performance.id})
+  
 }
 
 handleAddReviews(performance) {
-  console.log(performance.id)
-  
   console.log('called handleAddReviews')
   this.setState({showReviews: true, selectedId: performance.id})
 }
@@ -157,7 +166,6 @@ handleAddReviews(performance) {
 
 
 handleAddUpdate(performance) {
-  console.log(performance.id)
   console.log('called handleAddUpdate')
   this.setState({showUpdateModal: true, selectedId: performance.id,
   song:performance.song, singer: performance.singer, link : performance.link, Amount_of_views:performance.Amount_of_views })
@@ -165,7 +173,7 @@ handleAddUpdate(performance) {
 
 
 update() {
-  if((this.validate())){
+ 
   console.log("update")
   console.log()
   axios.put(`${PERFORMANCE_URL}/${this.state.selectedId}`,  {
@@ -186,7 +194,6 @@ update() {
       
       })
     }
-  }
 deletePerformance(performanceId) {
   console.log("deleteArtist")
   axios.delete(`${PERFORMANCE_URL}/${performanceId}`,  )
@@ -197,6 +204,24 @@ deletePerformance(performanceId) {
     }
 })
 }
+
+AddReview(){
+  if((this.validate_review())){
+    console.log("submit Add  new review")
+    axios.post('http://127.0.0.1:8000/api/reviews/',{
+      Performance_id: this.state.selectedId,
+      review_text: this.state.review_text,
+      user: 1})
+      .then(response => {
+        if (response.status === 201) {
+         this.get_performance()
+       }
+      })
+        this.setState({showAddreview: false, selectedId:null, review_text:""})
+    
+    }
+  }
+
 
 
 reviewsDetails(review, index){
@@ -226,7 +251,7 @@ filterNameSinger(artist){
 
 
 submitper() {
-    if((this.validate())){
+  if((this.validate_per())){
     console.log("submit performance", {song: this.state.song,
     singer: this.state.singer,
     link: this.state.link,
@@ -243,8 +268,8 @@ submitper() {
       })
         this.setState({showAddPerModal: false, singer:"", song:"", link:"", Amount_of_views:0})
     }
-         }
-      
+         
+  }
   
 componentDidMount() {
   this.get_performance()}
@@ -253,18 +278,21 @@ componentDidMount() {
 
 
 renderPerformence(performance, index){
-  console.log('renderPerformance', performance.id)
+  console.log('renderPerformance')
 
   return(
     
     <div key={index} >
-    
-    <ListGroup.Item>
+    <ListGroup.Item style={{ width: '35%' , border:'none' }}>
        <Performance  key={performance.id} performance={performance} />
       {this.state.displayViews && <p>{this.state.reviews.length}</p>}  
-      <Button onClick= {()=> this.handleAddReviews(performance)} >display reviews</Button>  &nbsp;&nbsp;
+      
+      <Button onClick= {()=> this.handleAddReviews(performance)} >View all comments</Button>  &nbsp;&nbsp;
+      <br></br>
+      <br></br>
       <Button onClick={() => this.deletePerformance(performance.id)}><FaTrashAlt/></Button>  &nbsp;&nbsp;
-      <Button onClick={()=> this.handleAddUpdate(performance)}  >  <BiEdit/></Button>  
+      <Button onClick={()=> this.handleAddUpdate(performance)}  >  <BiEdit/></Button>   &nbsp;&nbsp;
+      <Button onClick={()=> this.handleSubmitReview(performance)} > <FaRegComment/></Button> 
       </ListGroup.Item>
       <br></br>
       </div>
@@ -306,13 +334,9 @@ renderPerformence(performance, index){
                                 <Form.Label>Song</Form.Label>
                                    <Form.Select
                                    value = {this.state.song}
-                                   onChange = {(event) => this.setState({song: event.target.value})}>
-                                
+                                   onChange = {(event) => this.setState({song: event.target.value})}>                        
                                   {this.state.songs.map(
-                                  this.filterNameSong)
-                                    }
-                                    
-                                                  
+                                  this.filterNameSong)}
                                    </Form.Select> 
                                   </Form.Group>
                                   <div className="text-danger">{this.state.errors.song}</div>
@@ -322,12 +346,8 @@ renderPerformence(performance, index){
                                    placeholder='enter singer:'
                                    value = {this.state.singer}
                                    onChange = {(event) => this.setState({singer: event.target.value})}>
-                                  
                                   {this.state.artists.map(
-                                  this.filterNameSinger)
-                                    }
-                                    
-                                                  
+                                  this.filterNameSinger)}
                                    </Form.Select> 
                                   </Form.Group>
                                   <div className="text-danger">{this.state.errors.singer}</div>
@@ -348,6 +368,7 @@ renderPerformence(performance, index){
                                         type="number" placeholder="please enter number" 
                                         value={this.state.Amount_of_views}
                                         onChange={(event) => this.setState({Amount_of_views: event.target.value})}/>
+                                         <div className="text-danger">{this.state.errors.Amount_of_views}</div>
                                 </Form.Text>
                             </Form.Group>
 
@@ -391,62 +412,45 @@ renderPerformence(performance, index){
 
 
                 <Modal show={this.state.showAddreview} 
-                    onHide={() => this.setState({showAddreview: false,})}>
+                    onHide={() => this.setState({showAddreview: false})}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Add new review</Modal.Title>
+                        <Modal.Title>Add new comment</Modal.Title>
                     </Modal.Header>
 
                     <ModalBody>
                         <Form>
                             <Form.Group className="mb-3">
-                                <Form.Label>Title</Form.Label>
-                                <Form.Text>
-                                    <Form.Control 
-                                        type="text" placeholder="Enter title for your review..." 
-                                        value={this.state.title}
-                                        onChange={(event) => this.setState({title: event.target.value})}/>
-                                </Form.Text>
-                            </Form.Group>
-
-                            <Form.Group className="mb-3">
                                 <Form.Label>text</Form.Label>
                                 <Form.Text>
                                     <Form.Control 
                                         type="text" placeholder="enter your opinion.." 
-                                        value={this.state.text}
-                                        onChange={(event) => this.setState({text: event.target.value})}/>
+                                        value={this.state.review_text}
+                                        onChange={(event) => this.setState({review_text: event.target.value})}/>
+                                        <div className="text-danger">{this.state.errors.review_text}</div>
                                 </Form.Text>
                             </Form.Group>
-
-                        </Form>
-                    </ModalBody>
-                    <ModalFooter>
-                         <Button >Save</Button> 
-                    </ModalFooter>
-                </Modal>
+                           </Form>
+                            </ModalBody>
+                         <ModalFooter>
+                            <Button onClick={this.AddReview}>Save</Button> 
+                             </ModalFooter>
+                          </Modal>
 
 
 
 <Modal show={this.state.showReviews}  
                     onHide={() => this.setState({showReviews: false, reviews:[]})}>
-                    
-                    <Modal.Header closeButton>
-                      <h1>reviews</h1>
-                    </Modal.Header>
 
+                    <Modal.Header closeButton>
+                      <h1>comments</h1>
+                    </Modal.Header>
                     <ModalBody>
-                        <Form>  
-                                           
-                           {this.state.reviews.map(
-                                  this.reviewsDetails)
-                                    }
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;            <Button onClick={this.get_reviews}>see reviews</Button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                         <Button onClick={()=> this.handleSubmitReview(performance)} >add reviews</Button> 
+                        <Form>              
+                           {this.state.reviews.map(this.reviewsDetails)}      
+                        <Button onClick={this.get_reviews}>Click here</Button>
                         </Form>
                     </ModalBody>
                 </Modal>
-
-
         </div>
       )          
         

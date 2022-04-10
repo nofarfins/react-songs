@@ -166,7 +166,7 @@ renderArtist (artist,index){
   return(
     <div   key={index}>
 
-      <ListGroup.Item key={index} >
+      <ListGroup.Item key={index} style={{ width: '35%' , border:'none' }} >
       <Artist  artist={artist}  />
       <Button onClick={() => this.deleteArtist(artist.id)}> <FaTrashAlt/> </Button>  &nbsp;&nbsp;   
       <Button onClick={() => this.handleAddUpdate(artist)}  >  <BiEdit/></Button>  

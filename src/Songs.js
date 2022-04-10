@@ -19,11 +19,10 @@ export class Songs extends React.Component {
       songs: [],
       artists: [],
       showaddsongmodal:false,      
-      name:'',
+      name:"",
       song_composer: "",
       song_writer:"",
       lyrics:"",
-      song:""
     }
 
    this.renderSong= this.renderSong.bind(this);
@@ -51,10 +50,7 @@ export class Songs extends React.Component {
 
 
 submitsong() {
-  console.log("submit songs", {name:this.state.name,
-    song_composer:this.state.song_composer,
-    song_writer: this.state.song_writer,
-    lyrics: this.state.lyrics})
+  console.log("submit songs")
   axios.post('http://127.0.0.1:8000/api/songs/',
   {name:this.state.name,
   song_composer:this.state.song_composer,
@@ -69,9 +65,8 @@ submitsong() {
 filterNameArtist(artist){
     return(
           <option key={artist.id}>{artist.name}</option>
-          )
-                  }
-      
+          )}
+                         
 componentDidMount() {
   this.get_songs()
 }
@@ -79,7 +74,7 @@ componentDidMount() {
 renderSong (song, index){
   return(
     <div key={index} >
-      <ListGroup.Item >
+      <ListGroup.Item style={{ width: '35%' , border:'none' }} >
       <Song song={song} /> 
       </ListGroup.Item>
       <br></br>
@@ -107,13 +102,13 @@ renderSong (song, index){
         <Modal show={this.state.showaddsongmodal} 
                     onHide={() => this.setState({showaddsongmodal: false})}>
                     <Modal.Header closeButton>
-                        <Modal.Title> new song</Modal.Title>
+                        <Modal.Title> New song</Modal.Title>
                     </Modal.Header>
 
                     <ModalBody>
                         <Form>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Song name</Form.Label>
+                        <Form.Group className="mb-3">
+                                <Form.Label>Name:</Form.Label>
                                 <Form.Text>
                                     <Form.Control 
                                         type="text" placeholder="Enter song name..." 
@@ -127,10 +122,11 @@ renderSong (song, index){
                                    <Form.Select
                                    value = {this.state.song_composer}
                                    onChange = {(event) => this.setState({song_composer: event.target.value})}>
-                                  {this.state.songs.map(this.filterNameArtist)}
+                                  {this.state.artists.map(this.filterNameArtist)}
                                                   
                                    </Form.Select> 
                                   </Form.Group>
+
 
                                   <Form.Group className="mb-3"> 
                                 <Form.Label>Song writer</Form.Label>

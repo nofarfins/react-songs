@@ -7,7 +7,6 @@ import { BiMusic } from 'react-icons/bi';
 import { FaMicrophone } from "react-icons/fa";
 import { GiMusicalScore } from "react-icons/gi";
 import Button from 'react-bootstrap/Button'
-import { CgProfile } from "react-icons/cg";
 
 import Modal from 'react-bootstrap/Modal';
 
@@ -80,12 +79,9 @@ export class Header extends React.Component {
 
                     <Modal.Body >
                       <Container>
-                      <img src="profile1.jpg" width="110" height="120" className="center" ></img>
-                    
-                      <p style={{textAlign:'center'}} >username: {this.state.username}</p>
-                      <p style={{textAlign:'center'}}>first name:{this.state.first_name} </p>
-                      <p style={{textAlign:'center'}}>Last name:{this.state.last_name} </p>
-                      <p style={{textAlign:'center'}}>email: {this.state.email}</p>
+                      <img src="profile1.jpg" width="110" height="120" className="center" alt=" " ></img>
+                      <p style={{textAlign:'center'}}>first name: {this.state.first_name} </p>
+                      <p style={{textAlign:'center'}}>Last name: {this.state.last_name} </p>
                       </Container>
                     </Modal.Body>
                     <Modal.Footer>
