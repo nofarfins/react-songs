@@ -5,16 +5,13 @@ import Form from 'react-bootstrap/Form'
 import { ModalBody } from 'react-bootstrap';
 import { ModalFooter } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Artist} from './Artist';
-import './App.css';
+import { Artist } from './Artist';
 import Button from 'react-bootstrap/Button'
 import { ListGroup } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
-import { Header } from './Header';
+import { Header } from '../Header';
 import { FaTrashAlt } from "react-icons/fa";
 import { BiEdit } from "react-icons/bi";
-
-
 export const BASE_PATH = "http://127.0.0.1:8000/api"
 export const ARTISTS_URL = `${BASE_PATH}/artists`
 
@@ -29,30 +26,22 @@ export class Artists extends React.Component {
       artists: [],
       showAddArtistModal: false,
       showUpdateModal:false,
+      showAlert: false,
       name: "",
       age: "",
       information:"",
       selectedId:null,
-      errors:{}
-
-      
-      
-      
+      errors:{}      
     }
-
-
-    
      
     this.renderArtist= this.renderArtist.bind(this);
     this.submitArtist = this.submitArtist.bind(this)
     this.get_artists = this.get_artists.bind(this)
-    // this.filterNameArtist = this.filterNameArtist.bind(this)
     this.deleteArtist = this.deleteArtist.bind(this)
-    // this.updateArtist = this.updateArtist.bind(this)
     this.update = this.update.bind(this)
     this.handleAddUpdate = this.handleAddUpdate.bind(this)
     this.validate = this.validate.bind(this)
-   
+    this.handleDelete = this.handleDelete.bind(this)
   
   }
 
@@ -91,6 +80,12 @@ export class Artists extends React.Component {
   })
 }
 
+
+handleDelete(artist){
+console.log('handleDelete')
+this.setState({showAlert:true, selectedId:artist.id})
+}
+
 handleAddNew() {
   console.log('called handleAddNew')
   this.setState({showAddArtistModal: true})
@@ -101,13 +96,14 @@ handleAddUpdate(artist) {
   this.setState({showUpdateModal: true, selectedId: artist.id, name:artist.name, age:artist.age, information:artist.information})
 }
 
-deleteArtist(artistId) {
+deleteArtist() {
   console.log("deleteArtist")
-  axios.delete(`${ARTISTS_URL}/${artistId}`,  )
+  axios.delete(`${ARTISTS_URL}/${this.state.selectedId}`,  )
   .then(response => {
     console.log(response)
     if (response.status === 204) {
         this.get_artists()
+        this.setState({showAlert:false})
     }
 })
 }
@@ -166,9 +162,9 @@ renderArtist (artist,index){
   return(
     <div   key={index}>
 
-      <ListGroup.Item key={index} style={{ width: '35%' , border:'none' }} >
+      <ListGroup.Item key={index} style={{ border:'none' }} >
       <Artist  artist={artist}  />
-      <Button onClick={() => this.deleteArtist(artist.id)}> <FaTrashAlt/> </Button>  &nbsp;&nbsp;   
+      <Button onClick={() => this.handleDelete(artist)}> <FaTrashAlt/> </Button>  &nbsp;&nbsp;   
       <Button onClick={() => this.handleAddUpdate(artist)}  >  <BiEdit/></Button>  
       </ListGroup.Item>
       <br></br>
@@ -294,7 +290,19 @@ renderArtist (artist,index){
                     </ModalFooter>
                 </Modal>
 
-                
+
+<Modal show={this.state.showAlert} onHide={() => this.setState({showAlert: false})}>
+<br></br>
+   <Modal.Title>&nbsp; Please note!</Modal.Title>
+<Modal.Dialog>
+  <Modal.Body>
+    <p> All performances and songs associated with the artist will also be deleted</p>
+    <h5 style={{color:'red'}}>Are you sure you want to continue?</h5>
+    <Button variant="secondary" onClick={() => this.setState({showAlert: false})} >No</Button> &nbsp;&nbsp; 
+    <Button variant="primary" onClick = {this.deleteArtist}>Yes</Button>
+  </Modal.Body>
+</Modal.Dialog>
+</Modal>                
         
 
 

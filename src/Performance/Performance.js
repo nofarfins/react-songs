@@ -1,7 +1,6 @@
 import React from 'react';
 import { ImPlay2 } from "react-icons/im";
-import { Nav } from 'react-bootstrap';
-import { Review } from './Review';
+
 
 export class Performance extends React.Component {
     constructor(props) {

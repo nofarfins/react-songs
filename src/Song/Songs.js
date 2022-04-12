@@ -1,13 +1,15 @@
 import React from 'react';
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
-import {Song} from './Song';
+import {Song} from './Song'
 import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form'
-import './App.css';
 import { ListGroup, Container, ModalBody, ModalFooter } from 'react-bootstrap';
-import { Header } from './Header';
+import { Header } from '../Header';
+import { FaTrashAlt } from "react-icons/fa";
+export const BASE_PATH = "http://127.0.0.1:8000/api"
+export const SONGS_URL = `${BASE_PATH}/songs`
 
 
 
@@ -23,12 +25,16 @@ export class Songs extends React.Component {
       song_composer: "",
       song_writer:"",
       lyrics:"",
+      selectedId:null,
+      showAlert:false
     }
 
    this.renderSong= this.renderSong.bind(this);
-   this.submitSong = this.submitsong.bind(this);
+   this.submitsong = this.submitsong.bind(this);
    this.get_songs = this.get_songs.bind(this);
    this.filterNameArtist = this.filterNameArtist.bind(this);
+   this.handleDelete = this.handleDelete.bind(this)
+   this.deleteSong = this.deleteSong.bind(this)
   }
 
   get_songs() {
@@ -48,6 +54,24 @@ export class Songs extends React.Component {
 }
 
 
+handleDelete(song){
+  console.log('handleDelete')
+  this.setState({showAlert:true, selectedId:song.id})
+  }
+
+
+  deleteSong() {
+    console.log("deleteSong")
+    axios.delete(`${SONGS_URL}/${this.state.selectedId}`,  )
+    .then(response => {
+      console.log(response)
+      if (response.status === 204) {
+          this.get_songs()
+          this.setState({showAlert:false})
+      }
+  })
+  }
+
 
 submitsong() {
   console.log("submit songs")
@@ -64,7 +88,7 @@ submitsong() {
 
 filterNameArtist(artist){
     return(
-          <option key={artist.id}>{artist.name}</option>
+          <option value={artist.id} key={artist.id}>{artist.name}</option>
           )}
                          
 componentDidMount() {
@@ -74,8 +98,9 @@ componentDidMount() {
 renderSong (song, index){
   return(
     <div key={index} >
-      <ListGroup.Item style={{ width: '35%' , border:'none' }} >
+      <ListGroup.Item style={{border:'none' }} >
       <Song song={song} /> 
+      <Button onClick={() => this.handleDelete(song)}> <FaTrashAlt/> </Button>  &nbsp;&nbsp;   
       </ListGroup.Item>
       <br></br>
     </div>      
@@ -93,6 +118,7 @@ renderSong (song, index){
           <br></br>
         <h1>songs list</h1>
         <Button className="m-3" onClick={() => this.setState({showaddsongmodal: true})}> Add new</Button>
+        
         <br></br>
         <br></br>
         
@@ -153,6 +179,21 @@ renderSong (song, index){
                          <Button onClick={this.submitsong}>Save</Button> 
                     </ModalFooter>
                 </Modal>
+
+
+
+                <Modal show={this.state.showAlert} onHide={() => this.setState({showAlert: false})}>
+<br></br>
+   <Modal.Title>&nbsp; Please note!</Modal.Title>
+<Modal.Dialog>
+  <Modal.Body>
+    <p> all performances and songs associated with the artist will also be deleted</p>
+    <h5 style={{color:'red'}}>Are you sure you want to continue?</h5>
+    <Button variant="secondary" onClick={() => this.setState({showAlert: false})} >No</Button> &nbsp;&nbsp; 
+    <Button variant="primary" onClick = {this.deleteSong}>Yes</Button>
+  </Modal.Body>
+</Modal.Dialog>
+</Modal>
         </div>
       )          
         

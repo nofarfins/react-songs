@@ -1,13 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 import { Performance } from './Performance';
-import './App.css';
 import Button from 'react-bootstrap/Button'
 import { Container , ListGroup, ModalBody, ModalFooter } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Header } from './Header';
+import { Header } from '../Header';
 import { FaTrashAlt, FaRegComment } from "react-icons/fa";
 import { BiEdit } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
@@ -211,7 +210,7 @@ AddReview(){
     axios.post('http://127.0.0.1:8000/api/reviews/',{
       Performance_id: this.state.selectedId,
       review_text: this.state.review_text,
-      user: 1})
+      user: 3})
       .then(response => {
         if (response.status === 201) {
          this.get_performance()
@@ -283,9 +282,9 @@ renderPerformence(performance, index){
   return(
     
     <div key={index} >
-    <ListGroup.Item style={{ width: '35%' , border:'none' }}>
+    <ListGroup.Item style={{ border:'none' }}>
        <Performance  key={performance.id} performance={performance} />
-      {this.state.displayViews && <p>{this.state.reviews.length}</p>}  
+
       
       <Button onClick= {()=> this.handleAddReviews(performance)} >View all comments</Button>  &nbsp;&nbsp;
       <br></br>
@@ -456,3 +455,19 @@ renderPerformence(performance, index){
         
       }
   }
+
+
+
+  
+<Modal.Dialog>
+  <Modal.Body>
+    <p>Please note!</p>
+    <p> all performances and songs associated with the artist will also be deleted</p>
+    <h4>Are you sure you want to continue?</h4>
+  </Modal.Body>
+
+  <Modal.Footer>
+    <Button variant="secondary">Close</Button>
+    <Button variant="primary">Yes</Button>
+  </Modal.Footer>
+</Modal.Dialog>

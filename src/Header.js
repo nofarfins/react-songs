@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import './App.css';
 import Nav from 'react-bootstrap/Nav'
 import { Navbar , Container, NavbarBrand } from 'react-bootstrap';
 import { BiMusic } from 'react-icons/bi';

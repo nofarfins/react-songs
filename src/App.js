@@ -1,10 +1,9 @@
 import React from 'react';
-import './App.css';
 import { Container } from 'react-bootstrap';
 import { Routes, Route } from "react-router-dom";
-import { Artists } from './Artists';
-import { Songs } from './Songs';
-import {Performances} from './Performances'
+import {Artists} from './Artist/Artists'
+import { Songs } from './Song/Songs';
+import {Performances} from './Performance/Performances.js'
 import { WrappedLoginScreen } from './LoginScreen';
 
 
