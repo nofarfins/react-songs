@@ -282,7 +282,7 @@ renderPerformence(performance, index){
   return(
     
     <div key={index} >
-    <ListGroup.Item style={{ border:'none' }}>
+    <ListGroup.Item >
        <Performance  key={performance.id} performance={performance} />
 
       
@@ -458,16 +458,3 @@ renderPerformence(performance, index){
 
 
 
-  
-<Modal.Dialog>
-  <Modal.Body>
-    <p>Please note!</p>
-    <p> all performances and songs associated with the artist will also be deleted</p>
-    <h4>Are you sure you want to continue?</h4>
-  </Modal.Body>
-
-  <Modal.Footer>
-    <Button variant="secondary">Close</Button>
-    <Button variant="primary">Yes</Button>
-  </Modal.Footer>
-</Modal.Dialog>

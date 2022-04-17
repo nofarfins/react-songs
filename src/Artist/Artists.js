@@ -296,7 +296,7 @@ renderArtist (artist,index){
    <Modal.Title>&nbsp; Please note!</Modal.Title>
 <Modal.Dialog>
   <Modal.Body>
-    <p> All performances and songs associated with the artist will also be deleted</p>
+    <p> All songs and performances associated with the artist will also be deleted</p>
     <h5 style={{color:'red'}}>Are you sure you want to continue?</h5>
     <Button variant="secondary" onClick={() => this.setState({showAlert: false})} >No</Button> &nbsp;&nbsp; 
     <Button variant="primary" onClick = {this.deleteArtist}>Yes</Button>
