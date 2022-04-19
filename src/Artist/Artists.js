@@ -162,11 +162,12 @@ renderArtist (artist,index){
   return(
     <div   key={index}>
 
-      <ListGroup.Item key={index} style={{ border:'none' }} >
+      <Container style={{border:'solid' ,borderColor:"LavenderBlush", height:'440px', width:'400px'}}>
       <Artist  artist={artist}  />
-      <Button onClick={() => this.handleDelete(artist)}> <FaTrashAlt/> </Button>  &nbsp;&nbsp;   
-      <Button onClick={() => this.handleAddUpdate(artist)}  >  <BiEdit/></Button>  
-      </ListGroup.Item>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <Button variant="Light" onClick={() => this.handleDelete(artist)}> <FaTrashAlt/> </Button>  &nbsp;&nbsp;   
+      <Button variant="Light" onClick={() => this.handleAddUpdate(artist)}  >  <BiEdit/></Button>  
+      </Container>
       <br></br>
  </div>
       
@@ -183,16 +184,23 @@ renderArtist (artist,index){
       return(
         <div>
           <Header/>
-        <Container>
+        <Container >
           
           <br></br>
-        <h1  > Artists List</h1>
-        <Button  className="m-3" onClick={this.handleAddNew.bind(this)}> Add new</Button>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       
+        <Button  variant="outline-secondary"  className="m-3" onClick={this.handleAddNew.bind(this)}> To add a new performance click here!</Button>
 
         <br></br>
         <br></br>
-        
-          {artistsObjects}
+        <div style={{display:'flex' , flexWrap:'wrap', justifyContent:'space-between', alignItems:'flex-start', height:'250px'}}>
+        {artistsObjects}
+        </div>
+          
         
          </Container>
         

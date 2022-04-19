@@ -10,10 +10,9 @@ export class ArtistDetails extends React.Component {
     }
     render() {
       return (
-        <div  >
-      <p> {this.props.artist.information}</p>
-<br></br>
-</div>
+       
+      <p style={{textAlign:'center'}}> {this.props.artist.information}</p>
+
       )
     }
 }

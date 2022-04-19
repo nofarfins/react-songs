@@ -6,9 +6,12 @@ import { BiMusic } from 'react-icons/bi';
 import { FaMicrophone } from "react-icons/fa";
 import { GiMusicalScore } from "react-icons/gi";
 import Button from 'react-bootstrap/Button'
-
+import { Offcanvas } from 'bootstrap';
+import { NavDropdown } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
-
+import { FormControl } from 'react-bootstrap';
+import { BsSearch } from "react-icons/bs";
 export class Header extends React.Component {
     constructor(props) {
         super(props)
@@ -57,16 +60,18 @@ export class Header extends React.Component {
             return(
                 
                 <div>
-                <Navbar bg="dark" variant="dark">
+                <Navbar bg="light" expand="lg">
                 
                  
                 <NavbarBrand href = "/"> <BiMusic/> Home</NavbarBrand>
                     
-                  <Nav.Link style={{color:'white'}}  href = "artists"> <FaMicrophone style={{fontSize:'110%'}} />Artist</Nav.Link>
+                  <Nav.Link style={{color:'black'}}  href = "artists"> <FaMicrophone style={{fontSize:'110%'}} />Artist</Nav.Link>
                 
-                  <Nav.Link style={{color:'white'}} href = "songs"> <GiMusicalScore style={{fontSize:'120%'}} /> Songs</Nav.Link>
+                  <Nav.Link style={{color:'black'}} href = "songs"> <GiMusicalScore style={{fontSize:'120%'}} /> Songs</Nav.Link>
+
+                  
                   <Navbar.Collapse className="justify-content-end">
-                          <Nav.Link style={{color:'white'}} onClick={() => this.setState({showProfile: true})}>
+                          <Nav.Link style={{color:'black'}} onClick={() => this.setState({showProfile: true})}>
                             Hello  {this.state.first_name + ' ' + this.state.last_name}
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           </Nav.Link>
@@ -74,6 +79,10 @@ export class Header extends React.Component {
                   
                   
                </Navbar>
+
+
+               
+
                <Modal show={this.state.showProfile} onHide={() => this.setState({showProfile: false})}>
 
                     <Modal.Body >
@@ -89,6 +98,8 @@ export class Header extends React.Component {
                     </Modal.Footer>
                   
                   </Modal>
+
+                  
                </div>
             )
         }

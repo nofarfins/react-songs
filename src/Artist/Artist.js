@@ -14,18 +14,16 @@ export class Artist extends React.Component{
   render() {
       return(
       <div key = {this.props.artist.id}>
-        <h4> {this.props.artist.name} , {this.props.artist.age}  </h4>
-        
-        {   !this.state.displayMore &&
-                    <Nav.Link onClick={() => this.setState({displayMore: !this.state.displayMore})}>more...</Nav.Link>
-                }
-                {
-                    this.state.displayMore &&
-                    <ArtistDetails artist= {this.props.artist} />
-                }
-                {   this.state.displayMore &&
-                    <Nav.Link onClick={() => this.setState({displayMore: !this.state.displayMore})}>less...</Nav.Link>}
-                
+        <br></br>
+
+        <h4 style={{textAlign:'center'}}> {this.props.artist.name} , {this.props.artist.age}  </h4>
+        <br></br>
+        &nbsp;  &nbsp;&nbsp;  &nbsp;&nbsp;  &nbsp;&nbsp;  &nbsp;&nbsp;  &nbsp;&nbsp;
+        &nbsp;&nbsp;  <img  src='Photo/rotem.jpg' style={{width:'70%', height:"70%", }}  ></img>
+        <br></br>
+      <br></br>
+                    <ArtistDetails  artist= {this.props.artist} />
+              
       </div>
 
 

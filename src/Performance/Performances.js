@@ -282,19 +282,29 @@ renderPerformence(performance, index){
   return(
     
     <div key={index} >
-    <ListGroup.Item >
+      <Container style={{border:'solid' ,borderColor:"LavenderBlush", height:'350px', width:'400px'}} >
+        
+        
+      <div   >
        <Performance  key={performance.id} performance={performance} />
+       
+       <div>    
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <Button variant="Light"  onClick= {()=> this.handleAddReviews(performance)} >View all comments</Button>  &nbsp;&nbsp;
+      <br></br>
 
-      
-      <Button onClick= {()=> this.handleAddReviews(performance)} >View all comments</Button>  &nbsp;&nbsp;
-      <br></br>
-      <br></br>
-      <Button onClick={() => this.deletePerformance(performance.id)}><FaTrashAlt/></Button>  &nbsp;&nbsp;
-      <Button onClick={()=> this.handleAddUpdate(performance)}  >  <BiEdit/></Button>   &nbsp;&nbsp;
-      <Button onClick={()=> this.handleSubmitReview(performance)} > <FaRegComment/></Button> 
-      </ListGroup.Item>
-      <br></br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <Button variant="Light" onClick={() => this.deletePerformance(performance.id)}><FaTrashAlt/></Button>  &nbsp;&nbsp;
+      <Button variant="Light" onClick={()=> this.handleAddUpdate(performance)}  >  <BiEdit/></Button>   &nbsp;&nbsp;
+      <Button variant="Light" onClick={()=> this.handleSubmitReview(performance)} > <FaRegComment/></Button> 
+  
       </div>
+      </div>
+     
+      </Container>
+    
+      <br></br>
+    </div>  
       
   )
 }
@@ -312,13 +322,20 @@ renderPerformence(performance, index){
           
         <Container>
         <br></br>
-        <h1> Performences</h1>
-        <Button className="m-3" onClick={() => this.handleAddNew()}>Add performance</Button>
+        
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <Button variant="outline-secondary"  className="m-3" onClick={() => this.handleAddNew()} >To add a new performance click here!</Button>
         <br></br>
         <br></br>
-        
-        {performencesObjects}
-        
+        <div style={{display:'flex' , flexWrap:'wrap', justifyContent:'space-between', alignItems:'flex-start', height:'250px'}}>
+          
+        {performencesObjects} 
+
+        </div>
         </Container>
         
         <Modal show={this.state.showAddPerModal} 

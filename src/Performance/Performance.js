@@ -15,15 +15,21 @@ export class Performance extends React.Component {
 
       return (
           
-      <div  >
-        
-                 <h4>{this.props.performance.song.name}, {this.props.performance.singer.name}</h4>
-                 <p>   <a href={this.props.performance.link}><ImPlay2 style={{fontSize:'200%'}} /></a> 
-                   &nbsp;&nbsp;&nbsp; views: {this.props.performance.Amount_of_views}  </p>
-                   
-                <br></br>
-                 
+      <div     >
         <br></br>
+
+                 <div >
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <iframe
+        src={this.props.performance.link}
+        frameBorder="0"
+        allow="autoplay; encrypted-media"
+        allowFullScreen
+        title="video"
+      />{" "}
+    </div>
+    <h6 style={{textAlign:'center'}}>{this.props.performance.song.name}, {this.props.performance.singer.name}</h6>
+                <h6 style={{textAlign:'center'}}>Views: {this.props.performance.Amount_of_views}  </h6>  
+                   <br></br>
       </div>
       )
     }
