@@ -17,6 +17,8 @@ export class Performance extends React.Component {
           
       <div     >
         <br></br>
+        <h5 style={{textAlign:'center'}}>{this.props.performance.song.name}, {this.props.performance.singer.name}</h5>
+        <br></br>
 
                  <div >
                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <iframe
@@ -27,8 +29,8 @@ export class Performance extends React.Component {
         title="video"
       />{" "}
     </div>
-    <h6 style={{textAlign:'center'}}>{this.props.performance.song.name}, {this.props.performance.singer.name}</h6>
-                <h6 style={{textAlign:'center'}}>Views: {this.props.performance.Amount_of_views}  </h6>  
+    {/* <h5 style={{textAlign:'center'}}>{this.props.performance.song.name}, {this.props.performance.singer.name}</h5> */}
+                <p style={{textAlign:'center'}}>Views: {this.props.performance.Amount_of_views}  </p>  
                    <br></br>
       </div>
       )

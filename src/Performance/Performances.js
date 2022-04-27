@@ -282,21 +282,20 @@ renderPerformence(performance, index){
   return(
     
     <div key={index} >
-      <Container style={{border:'solid' ,borderColor:"LavenderBlush", height:'350px', width:'400px'}} >
+      <Container style={{border:'solid' ,borderColor:"DarkGrey", borderRadius:'25px', height:'400px', width:'400px'}} >
         
         
       <div   >
        <Performance  key={performance.id} performance={performance} />
        
        <div>    
-       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        <Button variant="Light"  onClick= {()=> this.handleAddReviews(performance)} >View all comments</Button>  &nbsp;&nbsp;
       <br></br>
-
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <Button variant="Light" onClick={() => this.deletePerformance(performance.id)}><FaTrashAlt/></Button>  &nbsp;&nbsp;
-      <Button variant="Light" onClick={()=> this.handleAddUpdate(performance)}  >  <BiEdit/></Button>   &nbsp;&nbsp;
-      <Button variant="Light" onClick={()=> this.handleSubmitReview(performance)} > <FaRegComment/></Button> 
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <Button variant="outline-secondary" onClick={() => this.deletePerformance(performance.id)}><FaTrashAlt/></Button>  &nbsp;&nbsp;
+      <Button variant="outline-secondary" onClick={()=> this.handleAddUpdate(performance)}  >  <BiEdit/></Button>   &nbsp;&nbsp;
+      <Button variant="outline-secondary" onClick={()=> this.handleSubmitReview(performance)} > <FaRegComment/></Button> 
   
       </div>
       </div>
@@ -327,8 +326,8 @@ renderPerformence(performance, index){
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         <Button variant="outline-secondary"  className="m-3" onClick={() => this.handleAddNew()} >To add a new performance click here!</Button>
+        
+         <Button  variant="outline-secondary"  className="m-3" onClick={() => this.handleAddNew()} >To add a new performance click here!</Button>
         <br></br>
         <br></br>
         <div style={{display:'flex' , flexWrap:'wrap', justifyContent:'space-between', alignItems:'flex-start', height:'250px'}}>
@@ -391,7 +390,7 @@ renderPerformence(performance, index){
                         </Form>
                     </ModalBody>
                     <ModalFooter>
-                         <Button onClick={this.submitper}>Save</Button> 
+                         <Button variant="outline-secondary"  className="m-3"  onClick={this.submitper}>Save</Button> 
                     </ModalFooter>
                 </Modal>
 
@@ -421,7 +420,7 @@ renderPerformence(performance, index){
                         </Form>
                     </ModalBody>
                     <ModalFooter>
-                         <Button onClick={this.update}>Save</Button> 
+                         <Button variant="outline-secondary"  className="m-3"  onClick={this.update}>Save</Button> 
                     </ModalFooter>
                 </Modal>
 
@@ -448,7 +447,7 @@ renderPerformence(performance, index){
                            </Form>
                             </ModalBody>
                          <ModalFooter>
-                            <Button onClick={this.AddReview}>Save</Button> 
+                            <Button variant="outline-secondary"  className="m-3"  onClick={this.AddReview}>Save</Button> 
                              </ModalFooter>
                           </Modal>
 
@@ -463,7 +462,7 @@ renderPerformence(performance, index){
                     <ModalBody>
                         <Form>              
                            {this.state.reviews.map(this.reviewsDetails)}      
-                        <Button onClick={this.get_reviews}>Click here</Button>
+                        <Button  onClick={this.get_reviews}>Click here</Button>
                         </Form>
                     </ModalBody>
                 </Modal>

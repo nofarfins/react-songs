@@ -162,11 +162,11 @@ renderArtist (artist,index){
   return(
     <div   key={index}>
 
-      <Container style={{border:'solid' ,borderColor:"LavenderBlush", height:'440px', width:'400px'}}>
+      <Container style={{border:'solid' ,borderColor:"DarkGrey", borderRadius:'25px', height:'440px', width:'400px'}}>
       <Artist  artist={artist}  />
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <Button variant="Light" onClick={() => this.handleDelete(artist)}> <FaTrashAlt/> </Button>  &nbsp;&nbsp;   
-      <Button variant="Light" onClick={() => this.handleAddUpdate(artist)}  >  <BiEdit/></Button>  
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <Button variant="outline-secondary" onClick={() => this.handleDelete(artist)}> <FaTrashAlt/> </Button>  &nbsp;&nbsp;   
+      <Button variant="outline-secondary" onClick={() => this.handleAddUpdate(artist)}  >  <BiEdit/></Button>  
       </Container>
       <br></br>
  </div>
@@ -185,7 +185,6 @@ renderArtist (artist,index){
         <div>
           <Header/>
         <Container >
-          
           <br></br>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -193,7 +192,7 @@ renderArtist (artist,index){
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        
-        <Button  variant="outline-secondary"  className="m-3" onClick={this.handleAddNew.bind(this)}> To add a new performance click here!</Button>
+        <Button  variant="outline-secondary"  className="m-3" onClick={this.handleAddNew.bind(this)}> To add a new artist click here!</Button>
 
         <br></br>
         <br></br>
@@ -248,7 +247,7 @@ renderArtist (artist,index){
                         </Form>
                     </ModalBody>
                     <ModalFooter>
-                         <Button onClick={this.submitArtist}>Save</Button> 
+                         <Button variant="outline-secondary"  className="m-3"  onClick={this.submitArtist}>Save</Button> 
                     </ModalFooter>
                 </Modal>
 
@@ -294,7 +293,7 @@ renderArtist (artist,index){
                         </Form>
                     </ModalBody>
                     <ModalFooter>
-                         <Button onClick={this.update}>Save</Button> 
+                         <Button variant="outline-secondary"  className="m-3"  onClick={this.update}>Save</Button> 
                     </ModalFooter>
                 </Modal>
 
@@ -307,7 +306,7 @@ renderArtist (artist,index){
     <p> All songs and performances associated with the artist will also be deleted</p>
     <h5 style={{color:'red'}}>Are you sure you want to continue?</h5>
     <Button variant="secondary" onClick={() => this.setState({showAlert: false})} >No</Button> &nbsp;&nbsp; 
-    <Button variant="primary" onClick = {this.deleteArtist}>Yes</Button>
+    <Button variant="outline-secondary"  className="m-3"  onClick = {this.deleteArtist}>Yes</Button>
   </Modal.Body>
 </Modal.Dialog>
 </Modal>                

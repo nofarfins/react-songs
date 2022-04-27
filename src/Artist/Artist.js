@@ -19,7 +19,7 @@ export class Artist extends React.Component{
         <h4 style={{textAlign:'center'}}> {this.props.artist.name} , {this.props.artist.age}  </h4>
         <br></br>
         &nbsp;  &nbsp;&nbsp;  &nbsp;&nbsp;  &nbsp;&nbsp;  &nbsp;&nbsp;  &nbsp;&nbsp;
-        &nbsp;&nbsp;  <img  src='Photo/rotem.jpg' style={{width:'70%', height:"70%", }}  ></img>
+         <img alt="Artist image" src={this.props.artist.picture} style={{width:'70%', height:"70%", }}  ></img>
         <br></br>
       <br></br>
                     <ArtistDetails  artist= {this.props.artist} />

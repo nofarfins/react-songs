@@ -60,18 +60,18 @@ export class Header extends React.Component {
             return(
                 
                 <div>
-                <Navbar bg="light" expand="lg">
+                <Navbar bg="dark" variant="dark">
                 
                  
                 <NavbarBrand href = "/"> <BiMusic/> Home</NavbarBrand>
                     
-                  <Nav.Link style={{color:'black'}}  href = "artists"> <FaMicrophone style={{fontSize:'110%'}} />Artist</Nav.Link>
+                  <Nav.Link style={{color:'white'}}   href = "artists"> <FaMicrophone style={{fontSize:'110%'}} />Artist</Nav.Link>
                 
-                  <Nav.Link style={{color:'black'}} href = "songs"> <GiMusicalScore style={{fontSize:'120%'}} /> Songs</Nav.Link>
+                  <Nav.Link style={{color:'white'}} href="songs"> <GiMusicalScore style={{fontSize:'120%'}} /> Songs</Nav.Link>
 
                   
                   <Navbar.Collapse className="justify-content-end">
-                          <Nav.Link style={{color:'black'}} onClick={() => this.setState({showProfile: true})}>
+                          <Nav.Link style={{color:'white'}} onClick={() => this.setState({showProfile: true})}>
                             Hello  {this.state.first_name + ' ' + this.state.last_name}
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           </Nav.Link>
@@ -93,7 +93,7 @@ export class Header extends React.Component {
                       </Container>
                     </Modal.Body>
                     <Modal.Footer>
-                    <Button variant="secondary" onClick={this.onSignoutClick.bind(this)}>Signout</Button>
+                    <Button variant="outline-secondary"  className="m-3"   onClick={this.onSignoutClick.bind(this)}>Signout</Button>
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </Modal.Footer>
                   

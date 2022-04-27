@@ -98,10 +98,15 @@ componentDidMount() {
 renderSong (song, index){
   return(
     <div key={index} >
-      <ListGroup.Item style={{border:'none' }} >
+
+      <Container style={{border:'solid' ,borderColor:"DarkGrey",borderRadius:'25px', height:'460px', width:'400px'}}>
       <Song song={song} /> 
-      <Button onClick={() => this.handleDelete(song)}> <FaTrashAlt/> </Button>  &nbsp;&nbsp;   
-      </ListGroup.Item>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <Button variant="outline-secondary"  className="m-3" onClick={() => this.handleDelete(song)}> <FaTrashAlt/> </Button>  &nbsp;&nbsp;   
+      <br></br>
+      <br></br>
+      </Container>
       <br></br>
     </div>      
   )
@@ -110,19 +115,24 @@ renderSong (song, index){
     render() {
     
       let songsObjects = this.state.songs.map(
-        this.renderSong)
+         this.renderSong)
       return(
         <div>
           <Header/>
-          <Container>
+          <Container >
           <br></br>
-        <h1>songs list</h1>
-        <Button className="m-3" onClick={() => this.setState({showaddsongmodal: true})}> Add new</Button>
-        
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <Button  variant="outline-secondary"  className="m-3" onClick={() => this.setState({showaddsongmodal: true})}>  To add a new artist click here!</Button>
+
         <br></br>
         <br></br>
-        
+        <div style={{display:'flex' , flexWrap:'wrap', justifyContent:'space-between', alignItems:'flex-start', height:'250px'}}>    
         {songsObjects}
+        </div>
         
         </Container>
         <Modal show={this.state.showaddsongmodal} 
@@ -176,7 +186,7 @@ renderSong (song, index){
                         </Form>
                     </ModalBody>
                     <ModalFooter>
-                         <Button onClick={this.submitsong}>Save</Button> 
+                         <Button variant="outline-secondary"  className="m-3"  onClick={this.submitsong}>Save</Button> 
                     </ModalFooter>
                 </Modal>
 
@@ -189,8 +199,8 @@ renderSong (song, index){
   <Modal.Body>
     <p> All performances associated with the song will also be deleted</p>
     <h5 style={{color:'red'}}>Are you sure you want to continue?</h5>
-    <Button variant="secondary" onClick={() => this.setState({showAlert: false})} >No</Button> &nbsp;&nbsp; 
-    <Button variant="primary" onClick = {this.deleteSong}>Yes</Button>
+    <Button variant="secondary"  className="m-3"  onClick={() => this.setState({showAlert: false})} >No</Button> &nbsp;&nbsp; 
+    <Button variant="outline-secondary"  className="m-3"  onClick = {this.deleteSong}>Yes</Button>
   </Modal.Body>
 </Modal.Dialog>
 </Modal>

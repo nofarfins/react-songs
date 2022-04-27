@@ -33,7 +33,11 @@ export class LoginScreen extends React.Component {
 
     render() {
         return(
-        <Form onSubmit={this.handleSubmit} style={{width: '50%', margin: "auto", marginTop: '10%'}}>
+            <div>
+            <br></br>
+            <br></br>
+            <div  style={{ width:'800px', margin:'0 auto', border:'solid' ,borderColor:"DarkGrey",borderRadius:'25px'}}>
+        <Form onSubmit={this.handleSubmit} style={{width: '50%', margin: "auto", marginTop: '5%'}}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Username</Form.Label>
                 <Form.Control type="text" placeholder="Enter username" 
@@ -47,10 +51,15 @@ export class LoginScreen extends React.Component {
                 value={this.state.password}
                 onChange={(event) => this.setState({password: event.target.value})}/>
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="outline-secondary"  className="m-3" type="submit">
                 Login
             </Button>
+            <Button variant="outline-secondary"  className="m-3" type="submit">
+                Add new account
+            </Button>
         </Form>
+        </div>
+        </div>
         )
     }
 }
