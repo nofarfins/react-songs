@@ -5,6 +5,7 @@ import {Artists} from './Artist/Artists'
 import { Songs } from './Song/Songs';
 import {Performances} from './Performance/Performances.js'
 import { WrappedLoginScreen } from './LoginScreen';
+import {Topten} from './Topten'
 
 
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/songs" element={<Songs />} />
         <Route path="/performances" element={<Performances />} />
         <Route path="/login" element={<WrappedLoginScreen />} />    
+        <Route path="/topten" element ={<Topten/>} />
         
   
     </Routes>

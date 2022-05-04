@@ -12,6 +12,7 @@ import { Form } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import { FormControl } from 'react-bootstrap';
 import { BsSearch } from "react-icons/bs";
+import { AiOutlineLike } from "react-icons/ai";
 export class Header extends React.Component {
     constructor(props) {
         super(props)
@@ -69,6 +70,7 @@ export class Header extends React.Component {
                 
                   <Nav.Link style={{color:'white'}} href="songs"> <GiMusicalScore style={{fontSize:'120%'}} /> Songs</Nav.Link>
 
+                  <Nav.Link style={{color:'white'}} href="topten" > <AiOutlineLike  style={{fontSize:'120%'}}/>Top Ten</Nav.Link>
                   
                   <Navbar.Collapse className="justify-content-end">
                           <Nav.Link style={{color:'white'}} onClick={() => this.setState({showProfile: true})}>
