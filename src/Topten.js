@@ -36,13 +36,8 @@ renderTopten(song, index){
     return(
       
       <div style={{textAlign:'center'}} key={index} >
-        {/* <Container style={{border:'solid' ,borderColor:"DarkGrey", borderRadius:'25px', height:'400px', width:'400px'}} > */}
         
-        <h4> <AiFillStar/>{song} <AiFillStar/></h4>
-       
-        
-        {/* </Container> */}
-      
+        <h5> <AiFillStar/>{song} <AiFillStar/></h5>
         <br></br>
       </div>  
         
@@ -56,6 +51,7 @@ renderTopten(song, index){
       return(
           <div>
             <Header/>
+            <br></br>
             <h2 style={{textAlign:'center'}}>The best 10 songs of 2021</h2>
             <br></br>
             <br></br>
